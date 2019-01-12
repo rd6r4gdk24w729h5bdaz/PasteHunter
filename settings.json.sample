@@ -40,7 +40,7 @@
       "enabled": true,
       "module": "outputs.elastic_output",
       "classname": "ElasticOutput",
-      "elastic_index": "paste-test",
+      "elastic_index": "paste",
       "elastic_host": "172.16.10.10",
       "elastic_port": 9200,
       "elastic_user": "elastic",
