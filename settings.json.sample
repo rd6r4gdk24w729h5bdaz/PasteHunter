@@ -18,7 +18,7 @@
       "store_all": false
     },
     "gists": {
-      "enabled": true,
+      "enabled": false,
       "module": "inputs.gists",
       "api_token": "",
       "api_limit": 100,
@@ -37,7 +37,7 @@
   },
   "outputs": {
     "elastic_output": {
-      "enabled": true,
+      "enabled": false,
       "module": "outputs.elastic_output",
       "classname": "ElasticOutput",
       "elastic_index": "paste",
@@ -48,8 +48,20 @@
       "elastic_ssl": false,
       "weekly_index": true
     },
+    "output_es_creds": {
+      "enabled": true,
+      "module": "outputs.elastic_output",
+      "classname": "ElasticOutput",
+      "elastic_index": "cred",
+      "elastic_host": "172.16.10.10",
+      "elastic_port": 9200,
+      "elastic_user": "elastic",
+      "elastic_pass": "changeme",
+      "elastic_ssl": false,
+      "weekly_index": true
+    },
     "json_output": {
-      "enabled": false,
+      "enabled": true,
       "module": "outputs.json_output",
       "classname": "JsonOutput",
       "output_path": "logs/json/",
@@ -92,7 +104,7 @@
       }
     },
     "slack_output": {
-      "enabled": true,
+      "enabled": false,
       "module": "outputs.slack_output",
       "classname": "SlackOutput",
       "webhook_url": "",
