@@ -186,7 +186,8 @@ def paste_scanner():
                     output.store_paste(paste_data)
                 except Exception as e:
                     logger.error("Unable to store {0} to {1} with error {2}".format(paste_data["pasteid"], output, e))
-        
+        else:
+            logger.debug("Skipping {0} because it doesn't match any Yara rule".format(paste_data["pasteid"]))
         end_time = time.time()
         logger.debug("Processing Finished for {0} in {1} seconds".format(
             paste_data["pasteid"],
@@ -217,7 +218,7 @@ if __name__ == "__main__":
     # Threads
     for i in range(5):
         m = multiprocessing.Process(target=paste_scanner)
-        # Add new process to list so we can run join on them later. 
+        # Add new process to list so we can run join on them later.
         processes.append(m)
         m.start()
 
@@ -260,7 +261,7 @@ if __name__ == "__main__":
             # Slow it down a little
             logger.info("Sleeping for " + str(conf['general']['run_frequency']) + " Seconds")
             sleep(conf['general']['run_frequency'])
-        
+
 
 
     except KeyboardInterrupt:
@@ -268,4 +269,3 @@ if __name__ == "__main__":
         for proc in processes:
             proc.terminate()
             proc.join()
-
