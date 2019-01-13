@@ -37,7 +37,7 @@
   },
   "outputs": {
     "elastic_output": {
-      "enabled": false,
+      "enabled": true,
       "module": "outputs.elastic_output",
       "classname": "ElasticOutput",
       "elastic_index": "paste",
