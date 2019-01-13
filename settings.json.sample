@@ -61,7 +61,7 @@
       "weekly_index": true
     },
     "json_output": {
-      "enabled": true,
+      "enabled": false,
       "module": "outputs.json_output",
       "classname": "JsonOutput",
       "output_path": "logs/json/",
