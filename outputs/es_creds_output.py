@@ -9,7 +9,6 @@ config = parse_config()
 
 class ESCredsOutput():
     def __init__(self):
-        logger.debug("Module init...")
         # Set up the database connection
         es_host = config['outputs']['es_creds_output']['elastic_host']
         es_port = config['outputs']['es_creds_output']['elastic_port']
@@ -26,7 +25,6 @@ class ESCredsOutput():
             logger.error(e)
             raise Exception('Unable to Connect') from None
         self.email_password_regex = re.compile('(?P<email>[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+)(\s*[:\|;]\s*)(?P<password>\w*)')
-        logger.debug("Module init...done")
 
     def store_paste(self, paste_data):
         if not self.test:
@@ -39,22 +37,16 @@ class ESCredsOutput():
             week_number = datetime.date(datetime.now()).isocalendar()[1]
             index_name = '{0}-{1}-{2}'.format(index_name, year_number, week_number)
 
-        logger.debug("###################################################")
-        logger.debug("PasteSite= {0} PasteId= {1} YaraRules= {2}".format(paste_data['pastesite'], paste_data['pasteid'], paste_data['YaraRule']))
-        #logger.debug("raw_paste= {0}".format(paste_data['raw_paste']))
         # Extract creds from paste
         cred_counter = 0
-
         for line in paste_data['raw_paste'].splitlines():
-            #logger.debug("----------------------------------------------------")
             res = self.email_password_regex.match(line)
             if res:
                 cred = {'email':    res.group("email"),
                         'password': res.group("password")
                         }
-                #logger.debug("    email= {0} password= {1}".format(cred['email'], cred['password']))
-                res = self.es.index(index=index_name, doc_type='paste', body=cred)
+                res = self.es.index(index=index_name, doc_type='email_password', body=cred)
                 logger.debug("index res= {0}".format(res))
                 cred_counter += 1
 
-        logger.debug("cred_counter= {0}".format(cred_counter))
+        logger.debug("{0} credentials were found".format(cred_counter))
