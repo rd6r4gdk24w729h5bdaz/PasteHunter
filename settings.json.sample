@@ -48,11 +48,11 @@
       "elastic_ssl": false,
       "weekly_index": true
     },
-    "es_creds_output": {
+    "es_username_password_output": {
       "enabled": true,
-      "module": "outputs.es_creds_output",
-      "classname": "ESCredsOutput",
-      "elastic_index": "username_password",
+      "module": "outputs.es_username_password_output",
+      "classname": "ESUsernamePasswordOutput",
+      "elastic_index": "username-password",
       "elastic_host": "172.16.10.10",
       "elastic_port": 9200,
       "elastic_user": "elastic",
@@ -122,7 +122,7 @@
   },
   "post_process": {
     "post_email": {
-      "enabled": true,
+      "enabled": false,
       "module": "postprocess.post_email",
       "rule_list": ["email_list"]
     },

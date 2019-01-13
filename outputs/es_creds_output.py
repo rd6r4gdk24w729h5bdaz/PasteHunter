@@ -7,16 +7,16 @@ import re
 logger = logging.getLogger('pastehunter')
 config = parse_config()
 
-class ESCredsOutput():
+class ESUsernamePasswordOutput():
     def __init__(self):
         # Set up the database connection
-        es_host = config['outputs']['es_creds_output']['elastic_host']
-        es_port = config['outputs']['es_creds_output']['elastic_port']
-        es_user = config['outputs']['es_creds_output']['elastic_user']
-        es_pass = config['outputs']['es_creds_output']['elastic_pass']
-        self.es_index = config['outputs']['es_creds_output']['elastic_index']
-        self.weekly = config['outputs']['es_creds_output']['weekly_index']
-        es_ssl = config['outputs']['es_creds_output']['elastic_ssl']
+        es_host = config['outputs']['es_username_password_output']['elastic_host']
+        es_port = config['outputs']['es_username_password_output']['elastic_port']
+        es_user = config['outputs']['es_username_password_output']['elastic_user']
+        es_pass = config['outputs']['es_username_password_output']['elastic_pass']
+        self.es_index = config['outputs']['es_username_password_output']['elastic_index']
+        self.weekly = config['outputs']['es_crees_username_password_outputds_output']['weekly_index']
+        es_ssl = config['outputs']['es_username_password_output']['elastic_ssl']
         self.test = False
         try:
             self.es = Elasticsearch(es_host, port=es_port, http_auth=(es_user, es_pass), use_ssl=es_ssl)
