@@ -27,7 +27,7 @@
       "file_blacklist": ["grahamcofborg-eval-package-list"]
     },
     "slexy":{
-      "enabled": true,
+      "enabled": false,
       "module": "inputs.slexy",
       "store_all": false,
       "api_scrape": "http://slexy.org/recent",
