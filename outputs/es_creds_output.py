@@ -24,7 +24,7 @@ class ESCredsOutput():
         except Exception as e:
             logger.error(e)
             raise Exception('Unable to Connect') from None
-        self.email_password_regex = re.compile('(?P<email>[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+)(\s*[:\|;]\s*)(?P<password>\w*)')
+        self.email_password_regex = re.compile('(?P<email>[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+)(\s*[:\|;]\s*)(?P<password>.+?)\s')
 
     def store_paste(self, paste_data):
         if not self.test:
