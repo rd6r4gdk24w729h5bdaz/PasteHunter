@@ -24,7 +24,7 @@ class ESUsernamePasswordOutput():
         except Exception as e:
             logger.error(e)
             raise Exception('Unable to Connect') from None
-        self.username_password_regex = re.compile('(?P<username>[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+)(\s*[:\|;]\s*)(?P<password>.+?)\s')
+        self.username_password_regex = re.compile('(?P<username>[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+)(\s*[:\|;]\s*)(?P<password>.+?)[:\|;\s]')
 
     def store_paste(self, paste_data):
         if not self.test:
