@@ -1,7 +1,7 @@
 /*
     These are test rules
 */
-
+/*
 rule test_hex_MZ
 {
     meta:
@@ -64,3 +64,4 @@ rule test_autoit
     condition:
         ($tray and 3 of them) or (5 of them)
 }
+*/

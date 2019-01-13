@@ -1,7 +1,7 @@
 /*
     This rule will look for common powershell elements
 */
-
+/*
 rule powershell
 {
     meta:
@@ -26,3 +26,4 @@ rule powershell
         4 of them
 
 }
+*/

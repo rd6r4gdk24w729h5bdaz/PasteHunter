@@ -1,7 +1,7 @@
 /*
     This rule will look for ducky / bunny code
 */
-
+/*
 rule ducky_code
 {
     meta:
@@ -39,3 +39,4 @@ rule bunny_code
     condition:
         4 of them
 }
+*/
