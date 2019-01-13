@@ -49,4 +49,4 @@ class ESUsernamePasswordOutput():
                 logger.debug("index res= {0}".format(res))
                 cred_counter += 1
 
-        logger.debug("{0} credentials were found".format(cred_counter))
+        logger.info("Paste {0} contains {1} username password credentials".format(paste_data["pasteid"], cred_counter))
