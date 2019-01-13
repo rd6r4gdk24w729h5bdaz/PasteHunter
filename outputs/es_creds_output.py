@@ -24,7 +24,7 @@ class ESCredsOutput():
         except Exception as e:
             logger.error(e)
             raise Exception('Unable to Connect') from None
-        self.email_password_regex = re.compile('(?P<email>[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+)(\s*[:\|;]\s*)(?P<password>.+?)\s')
+        self.username_password_regex = re.compile('(?P<username>[@a-zA-Z0-9\._\-]{5,})(\s*[:\|;]\s*)(?P<password>.+?)\s')
 
     def store_paste(self, paste_data):
         if not self.test:
@@ -40,12 +40,12 @@ class ESCredsOutput():
         # Extract creds from paste
         cred_counter = 0
         for line in paste_data['raw_paste'].splitlines():
-            res = self.email_password_regex.match(line)
+            res = self.username_password_regex.match(line)
             if res:
-                cred = {'email':    res.group("email"),
+                cred = {'username':    res.group("username"),
                         'password': res.group("password")
                         }
-                res = self.es.index(index=index_name, doc_type='email_password', body=cred)
+                res = self.es.index(index=index_name, doc_type='username_password', body=cred)
                 logger.debug("index res= {0}".format(res))
                 cred_counter += 1
 
