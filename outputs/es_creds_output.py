@@ -2,6 +2,7 @@ from elasticsearch import Elasticsearch
 from common import parse_config
 from datetime import datetime
 import logging
+import re
 
 logger = logging.getLogger('pastehunter')
 config = parse_config()
@@ -23,6 +24,8 @@ class ESCredsOutput():
         except Exception as e:
             logger.error(e)
             raise Exception('Unable to Connect') from None
+        self.email_password_regex = re.compile('(?P<email>[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+)([:\|;])(?P<password>\w*)')
+
 
     def store_paste(self, paste_data):
         if not self.test:
@@ -37,22 +40,21 @@ class ESCredsOutput():
 
 
         logger.debug("###################################################")
-        logger.debug("PasteId={0}", format(paste_data['pasteid']))
-        logger.debug("PasteSite={0}", format(paste_data['pastesite']))
-        logger.debug("YaraRules={0}", format(paste_data['YaraRule']))
+        logger.debug("PasteId= {0}", format(paste_data['pasteid']))
+        logger.debug("PasteSite= {0}", format(paste_data['pastesite']))
+        logger.debug("YaraRules= {0}", format(paste_data['YaraRule']))
 
         # Extract creds from paste
         cred_counter = 0
-        email_password_regex = r'(?P<email>[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+)([:\|;])(?P<password>\w*)'
 
         for line in paste_data['raw_paste'].splitlines():
-            res = email_password_regex.match(line)
+            res = self.email_password_regex.match(line)
             if res:
                 cred = {'email':    res.group("email"),
                         'password': res.group("password")
                         }
-                logger.debug("    email={0} password={1}", format(cred['email'], cred['password']))
+                logger.debug("    email= {0} password= {1}", format(cred['email'], cred['password']))
                 self.es.index(index=index_name, doc_type='paste', body=cred)
                 cred_counter += 1
 
-        logger.debug("cred_counter={0}", format(cred_counter))
+        logger.debug("cred_counter= {0}", format(cred_counter))
