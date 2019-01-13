@@ -15,7 +15,7 @@ class ESUsernamePasswordOutput():
         es_user = config['outputs']['es_username_password_output']['elastic_user']
         es_pass = config['outputs']['es_username_password_output']['elastic_pass']
         self.es_index = config['outputs']['es_username_password_output']['elastic_index']
-        self.weekly = config['outputs']['es_crees_username_password_outputds_output']['weekly_index']
+        self.weekly = config['outputs']['es_username_password_output']['weekly_index']
         es_ssl = config['outputs']['es_username_password_output']['elastic_ssl']
         self.test = False
         try:
