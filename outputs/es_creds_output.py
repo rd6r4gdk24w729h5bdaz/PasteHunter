@@ -56,7 +56,7 @@ class ESCredsOutput():
                 cred = {'email':    res.group("email"),
                         'password': res.group("password")
                         }
-                logger.debug("    email= {0} password= {1}", format(cred['email'], cred['password']))
+                logger.debug("    email= {0} password= {1}".format(cred['email'], cred['password']))
                 self.es.index(index=index_name, doc_type='paste', body=cred)
                 cred_counter += 1
 
