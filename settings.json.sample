@@ -52,7 +52,7 @@
       "enabled": true,
       "module": "outputs.es_creds_output",
       "classname": "ESCredsOutput",
-      "elastic_index": "cred",
+      "elastic_index": "username_password",
       "elastic_host": "172.16.10.10",
       "elastic_port": 9200,
       "elastic_user": "elastic",
