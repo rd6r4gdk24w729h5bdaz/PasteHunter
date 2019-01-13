@@ -11,13 +11,13 @@ class ESCredsOutput():
     def __init__(self):
         logger.debug("Module init...")
         # Set up the database connection
-        es_host = config['outputs']['elastic_output']['elastic_host']
-        es_port = config['outputs']['elastic_output']['elastic_port']
-        es_user = config['outputs']['elastic_output']['elastic_user']
-        es_pass = config['outputs']['elastic_output']['elastic_pass']
-        self.es_index = config['outputs']['elastic_output']['elastic_index']
-        self.weekly = config['outputs']['elastic_output']['weekly_index']
-        es_ssl = config['outputs']['elastic_output']['elastic_ssl']
+        es_host = config['outputs']['es_creds_output']['elastic_host']
+        es_port = config['outputs']['es_creds_output']['elastic_port']
+        es_user = config['outputs']['es_creds_output']['elastic_user']
+        es_pass = config['outputs']['es_creds_output']['elastic_pass']
+        self.es_index = config['outputs']['es_creds_output']['elastic_index']
+        self.weekly = config['outputs']['es_creds_output']['weekly_index']
+        es_ssl = config['outputs']['es_creds_output']['elastic_ssl']
         self.test = False
         try:
             self.es = Elasticsearch(es_host, port=es_port, http_auth=(es_user, es_pass), use_ssl=es_ssl)
