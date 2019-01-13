@@ -25,29 +25,34 @@ class ESCredsOutput():
             raise Exception('Unable to Connect') from None
 
     def store_paste(self, paste_data):
-        if self.test:
-            index_name = self.es_index
-            if self.weekly:
-                year_number = datetime.date(datetime.now()).isocalendar()[0]
-                week_number = datetime.date(datetime.now()).isocalendar()[1]
-                index_name = '{0}-{1}-{2}'.format(index_name, year_number, week_number)
+        if not self.test:
+            logger.error("Elastic Search Enabled, not configured!")
+            return
 
-            # Extract creds from paste
-            logger.debug("###################################################")
-            logger.debug("PasteId={0}", format(paste_data['pasteid']))
-            logger.debug("PasteSite={0}", format(paste_data['pastesite']))
-            logger.debug("YaraRules={0}", format(paste_data['YaraRule']))
-            cred_counter = 0
-            email_password_regex = r'(?P<email>[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+)([:\|;])(?P<password>\w*)'
+        index_name = self.es_index
+        if self.weekly:
+            year_number = datetime.date(datetime.now()).isocalendar()[0]
+            week_number = datetime.date(datetime.now()).isocalendar()[1]
+            index_name = '{0}-{1}-{2}'.format(index_name, year_number, week_number)
 
-            for line in paste_data['raw_paste'].splitlines():
-                res = email_password_regex.match(line)
-                if res:
-                    cred = {'email':    res.group("email"),
-                            'password': res.group("password")
-                            }
-                    logger.debug("    email={0} password={1}", format(cred['email'], cred['password']))
-                    self.es.index(index=index_name, doc_type='paste', body=cred)
-                    cred_counter += 1
 
-            logger.debug("cred_counter={0}", format(cred_counter)
+        logger.debug("###################################################")
+        logger.debug("PasteId={0}", format(paste_data['pasteid']))
+        logger.debug("PasteSite={0}", format(paste_data['pastesite']))
+        logger.debug("YaraRules={0}", format(paste_data['YaraRule']))
+
+        # Extract creds from paste
+        cred_counter = 0
+        email_password_regex = r'(?P<email>[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+)([:\|;])(?P<password>\w*)'
+
+        for line in paste_data['raw_paste'].splitlines():
+            res = email_password_regex.match(line)
+            if res:
+                cred = {'email':    res.group("email"),
+                        'password': res.group("password")
+                        }
+                logger.debug("    email={0} password={1}", format(cred['email'], cred['password']))
+                self.es.index(index=index_name, doc_type='paste', body=cred)
+                cred_counter += 1
+
+        logger.debug("cred_counter={0}", format(cred_counter))
