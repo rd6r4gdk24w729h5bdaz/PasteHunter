@@ -38,11 +38,19 @@ class ESCredsOutput():
             week_number = datetime.date(datetime.now()).isocalendar()[1]
             index_name = '{0}-{1}-{2}'.format(index_name, year_number, week_number)
 
-        logger.debug("###################################################")
 
+        logger.debug("###################################################")
+        logger.debug("PasteId= {0}".format(paste_data['pasteid']))
+        logger.debug("PasteSite= {0}".format(paste_data['pastesite']))
+        logger.debug("YaraRules= {0}".format(paste_data['YaraRule']))
+
+        logger.debug("type(raw_paste)= {0}".format(type(paste_data['raw_paste'])))
+        logger.debug("raw_paste= {0}".format(paste_data['raw_paste']))
         # Extract creds from paste
         cred_counter = 0
+
         for line in paste_data['raw_paste'].splitlines():
+            logger.debug("----------------------------------------------------")
             res = self.email_password_regex.match(line)
             if res:
                 cred = {'email':    res.group("email"),
@@ -52,4 +60,4 @@ class ESCredsOutput():
                 self.es.index(index=index_name, doc_type='paste', body=cred)
                 cred_counter += 1
 
-        logger.debug("cred_counter= {0}", format(cred_counter))
+        logger.debug("cred_counter= {0}".format(cred_counter))
