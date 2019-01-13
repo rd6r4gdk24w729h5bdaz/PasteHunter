@@ -38,15 +38,10 @@ class ESCredsOutput():
             week_number = datetime.date(datetime.now()).isocalendar()[1]
             index_name = '{0}-{1}-{2}'.format(index_name, year_number, week_number)
 
-
         logger.debug("###################################################")
-        logger.debug("PasteId= {0}", format(paste_data['pasteid']))
-        logger.debug("PasteSite= {0}", format(paste_data['pastesite']))
-        logger.debug("YaraRules= {0}", format(paste_data['YaraRule']))
 
         # Extract creds from paste
         cred_counter = 0
-
         for line in paste_data['raw_paste'].splitlines():
             res = self.email_password_regex.match(line)
             if res:
