@@ -48,10 +48,10 @@
       "elastic_ssl": false,
       "weekly_index": true
     },
-    "output_es_creds": {
+    "es_creds_output": {
       "enabled": true,
-      "module": "outputs.elastic_output",
-      "classname": "ElasticOutput",
+      "module": "outputs.es_creds_output",
+      "classname": "ESCredsOutput",
       "elastic_index": "cred",
       "elastic_host": "172.16.10.10",
       "elastic_port": 9200,

@@ -6,7 +6,7 @@ import logging
 logger = logging.getLogger('pastehunter')
 config = parse_config()
 
-class ElasticOutput():
+class ESCredsOutput():
     def __init__(self):
         # Set up the database connection
         es_host = config['outputs']['elastic_output']['elastic_host']
@@ -51,6 +51,6 @@ class ElasticOutput():
                     cred_counter += 1
 
             logger.debug("cred_counter={0}", format(cred_counter)
-            
+
         else:
             logger.error("Elastic Search Enabled, not configured!")
