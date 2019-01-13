@@ -51,6 +51,3 @@ class ESCredsOutput():
                     cred_counter += 1
 
             logger.debug("cred_counter={0}", format(cred_counter)
-
-        else:
-            logger.error("Elastic Search Enabled, not configured!")
