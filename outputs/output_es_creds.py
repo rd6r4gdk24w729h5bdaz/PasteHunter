@@ -6,7 +6,6 @@ import logging
 logger = logging.getLogger('pastehunter')
 config = parse_config()
 
-
 class ElasticOutput():
     def __init__(self):
         # Set up the database connection
@@ -38,17 +37,20 @@ class ElasticOutput():
             logger.debug("PasteId={0}", format(paste_data['pasteid']))
             logger.debug("PasteSite={0}", format(paste_data['pastesite']))
             logger.debug("YaraRules={0}", format(paste_data['YaraRule']))
-            cred_counter=0
+            cred_counter = 0
             email_password_regex = r'(?P<email>[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+)([:\|;])(?P<password>\w*)'
+
             for line in paste_data['raw_paste'].splitlines():
                 res = email_password_regex.match(line)
                 if res:
                     cred = {'email':    res.group("email"),
                             'password': res.group("password")
                             }
-                    logger.debug("    email={0} password={1}",format(cred['email'], cred['password']))
+                    logger.debug("    email={0} password={1}", format(cred['email'], cred['password']))
                     self.es.index(index=index_name, doc_type='paste', body=cred)
-                    cred_counter+=1
-            logger.debug("cred_counter={0}",format(cred_counter)
+                    cred_counter += 1
+
+            logger.debug("cred_counter={0}", format(cred_counter)
+            
         else:
             logger.error("Elastic Search Enabled, not configured!")
