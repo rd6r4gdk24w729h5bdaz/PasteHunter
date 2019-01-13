@@ -9,6 +9,7 @@ config = parse_config()
 
 class ESCredsOutput():
     def __init__(self):
+        logger.debug("Module init...")
         # Set up the database connection
         es_host = config['outputs']['elastic_output']['elastic_host']
         es_port = config['outputs']['elastic_output']['elastic_port']
@@ -25,7 +26,7 @@ class ESCredsOutput():
             logger.error(e)
             raise Exception('Unable to Connect') from None
         self.email_password_regex = re.compile('(?P<email>[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+)(\s*[:\|;]\s*)(?P<password>\w*)')
-
+        logger.debug("Module init...done")
 
     def store_paste(self, paste_data):
         if not self.test:
