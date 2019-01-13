@@ -15,7 +15,7 @@ rule email_list
         #email_add > 20
 
 }
-
+/*
 rule password_list
 {
     meta:
@@ -30,3 +30,4 @@ rule password_list
         #data_format > 10
 
 }
+*/
