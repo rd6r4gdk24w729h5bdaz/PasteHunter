@@ -1,7 +1,6 @@
 from neo4jrestclient.client import GraphDatabase
 from common import parse_config
 import logging
-import re
 
 logger = logging.getLogger('pastehunter')
 config = parse_config()
@@ -36,7 +35,9 @@ class Neo4jOutput():
                         'password': res.group("password")
                         }
                 # Insert in DB
-                neo4j_json = re.sub(', "', ', ', re.sub('":', ':', re.sub('({")', '{', cred)))
+                neo4j_json = ''
+                for key, value in cred.items():
+                    neo4j_json += "{0}: '{1}', ".format(key, value)
                 db_insert = "MERGE (:username_password {0})".format(neo4j_json)
                 self.db.query(db_insert)
                 cred_counter += 1
