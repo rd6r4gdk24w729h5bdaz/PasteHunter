@@ -15,7 +15,6 @@ class Neo4jOutput():
         neo4j_user = config['outputs']['neo4j_output']['neo4j_user']
         neo4j_pass = config['outputs']['neo4j_output']['neo4j_pass']
         self.test = False
-        logger.info("DEBUG: {0}:{1}".format(neo4j_host, neo4j_port))
         try:
             self.db = GraphDatabase("http://{0}:{1}".format(neo4j_host, neo4j_port), neo4j_user, neo4j_pass)
             self.test = True
@@ -41,7 +40,7 @@ class Neo4jOutput():
                 neo4j_json = ''
                 for key, value in cred.items():
                     neo4j_json += "{0}: '{1}', ".format(key, value)
-                db_insert = "MERGE (:username_password {0})".format(neo4j_json)
+                db_insert = "MERGE (:username_password { {0} })".format(neo4j_json)
                 self.db.query(db_insert)
                 cred_counter += 1
 
