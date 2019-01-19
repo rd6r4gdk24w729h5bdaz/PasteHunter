@@ -1,4 +1,23 @@
 # ToDo
+* The waitoforit.sh script used in the dockerfile sucks.
+  If we disable ES from active outputs, we never run the container...
+  We need to replace it by a small check at output initialisation like this one:
+  
+  >  # Connect to DB
+  >  connection_try=0
+  >  while True:
+  >    try:
+  >      connection_try += 1
+  >      db = GraphDatabase(db_endpoint, db_username, db_password)
+  >      log("Connected to DB (try "+str(connection_try)+"/"+str(max_connection_try)+")","debug")
+  >      break
+  >    except:
+  <      log("Not connected to DB (try "+str(connection_try)+"/"+str(max_connection_try)+")","warning")
+  >      if connection_try >= max_connection_try:
+  <        log("DB unrecheable. Aborting...","error")
+  >        exit(1)
+  >      time.sleep(connection_delay)
+
 * Handle these kind of credentials:
   * cisco passwords in a cisco_password index
     "enable secret" wide ascii nocase
