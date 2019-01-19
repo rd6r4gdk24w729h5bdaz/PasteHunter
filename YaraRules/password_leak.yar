@@ -15,7 +15,7 @@ rule email_list
         #email_add > 20
 
 }
-
+/*
 rule password_list
 {
     meta:
@@ -24,9 +24,10 @@ rule password_list
         reference = "https://github.com/kevthehermit/PasteHunter"
 
     strings:
-        $data_format = /(?P<username>[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+)(\s*[:\|;]\s*)(?P<password>.+?)[:\|;\s]/
+        $data_format = /\b([@a-zA-Z0-9._-]{5,})(:|\|)(.*)\b/
 
     condition:
         #data_format > 10
 
 }
+*/
