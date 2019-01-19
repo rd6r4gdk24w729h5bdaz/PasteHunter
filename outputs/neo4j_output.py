@@ -15,6 +15,7 @@ class Neo4jOutput():
         neo4j_user = config['outputs']['neo4j_output']['neo4j_user']
         neo4j_pass = config['outputs']['neo4j_output']['neo4j_pass']
         self.test = False
+        logger.info("DEBUG: {0}:{1}".format(neo4j_host, neo4j_port))
         try:
             self.db = GraphDatabase("{0}:{1}".format(neo4j_host, neo4j_port), neo4j_user, neo4j_pass)
             self.test = True
