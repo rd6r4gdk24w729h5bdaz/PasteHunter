@@ -40,10 +40,15 @@ class Neo4jOutput():
                         'password': res.group("password")
                         }
                 logger.debug("Cred: {0} ".format(cred))
-                # Insert in DB
+
+                # Format dict to neo4j "json"
                 neo4j_json = ''
                 for key, value in cred.items():
                     neo4j_json += "{0}: '{1}', ".format(key, value)
+                neo4j_json = neo4j_json[:-2]  # Remove trailing ", "
+                logger.debug("neo4j_json: {0} ".format(neo4j_json))
+
+                # Insert in DB
                 db_insert = "MERGE (:username_password {{ {0} }})".format(neo4j_json)
                 logger.debug("Cypher: {0} ".format(db_insert))
                 self.db.query(db_insert)
