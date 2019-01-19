@@ -25,7 +25,7 @@ services:
         hard: -1
     mem_limit: 1g
     volumes:
-      - /opt/PasteHunter/data:/usr/share/elasticsearch/data
+      - /opt/PasteHunter/data/elasticsearch:/usr/share/elasticsearch/data
     ports:
       - "0.0.0.0:9200:9200"
     networks:

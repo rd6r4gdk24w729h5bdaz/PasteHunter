@@ -24,7 +24,7 @@ services:
         hard: -1
     mem_limit: 1g
     volumes:
-      - /opt/PasteHunter/neo4j:/data
+      - /opt/PasteHunter/data/neo4j:/data
     ports:
       - "0.0.0.0:7474:7474"
       - "0.0.0.0:7473:7473"
