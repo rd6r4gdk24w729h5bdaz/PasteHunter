@@ -1,6 +1,7 @@
 from neo4jrestclient.client import GraphDatabase
 from common import parse_config
 import logging
+import re
 
 logger = logging.getLogger('pastehunter')
 config = parse_config()
@@ -20,6 +21,7 @@ class Neo4jOutput():
         except Exception as e:
             logger.error(e)
             raise Exception('Unable to Connect') from None
+        self.username_password_regex = re.compile('(?P<username>[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+)(\s*[:\|;]\s*)(?P<password>.+?)[:\|;\s]')
 
     def store_paste(self, paste_data):
         if not self.test:
