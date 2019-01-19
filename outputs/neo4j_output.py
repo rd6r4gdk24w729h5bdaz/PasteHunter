@@ -2,6 +2,7 @@ from neo4jrestclient.client import GraphDatabase
 from common import parse_config
 import logging
 import re
+import os
 
 logger = logging.getLogger('pastehunter')
 config = parse_config()
@@ -32,7 +33,7 @@ class Neo4jOutput():
         cred_counter = 0
         for line in paste_data['raw_paste'].splitlines():
             logger.debug("Line: {0} ".format(line))
-            res = self.username_password_regex.match(line)
+            res = self.username_password_regex.match(line+os.linesep)
             logger.debug("res: {0} ".format(res))
             if res:
                 cred = {'username': res.group("username"),

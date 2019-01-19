@@ -3,6 +3,7 @@ from common import parse_config
 from datetime import datetime
 import logging
 import re
+import os
 
 logger = logging.getLogger('pastehunter')
 config = parse_config()
@@ -40,7 +41,7 @@ class ESUsernamePasswordOutput():
         # Extract creds from paste
         cred_counter = 0
         for line in paste_data['raw_paste'].splitlines():
-            res = self.username_password_regex.match(line)
+            res = self.username_password_regex.match(line+os.linesep)
             if res:
                 cred = {'username':    res.group("username"),
                         'password': res.group("password")
