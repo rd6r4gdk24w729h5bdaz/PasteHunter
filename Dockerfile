@@ -20,4 +20,4 @@ WORKDIR /usr/src/pastehunter
 COPY . ./
 RUN pip install -r requirements.txt
 
-CMD ["/usr/src/wait-for-it/wait-for-it.sh","-t", "0","172.16.10.10:9200","--", "python", "pastehunter.py"]
+CMD ["/usr/src/wait-for-it/wait-for-it.sh","-t", "0","172.16.10.10:7474","--", "python", "pastehunter.py"]
