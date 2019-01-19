@@ -44,7 +44,7 @@ class Neo4jOutput():
                 neo4j_json = ''
                 for key, value in cred.items():
                     neo4j_json += "{0}: '{1}', ".format(key, value)
-                db_insert = "MERGE (:username_password { {0} })".format(neo4j_json)
+                db_insert = "MERGE (:username_password {{ {0} }})".format(neo4j_json)
                 logger.debug("Cypher: {0} ".format(db_insert))
                 self.db.query(db_insert)
                 cred_counter += 1
