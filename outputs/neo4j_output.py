@@ -16,7 +16,7 @@ class Neo4jOutput():
         neo4j_pass = config['outputs']['neo4j_output']['neo4j_pass']
         self.test = False
         try:
-            self.db = GraphDatabase(neo4j_host+""+neo4j_port, neo4j_user, neo4j_pass)
+            self.db = GraphDatabase("{0}:{1}".format(neo4j_host, neo4j_port), neo4j_user, neo4j_pass)
             self.test = True
         except Exception as e:
             logger.error(e)
