@@ -17,7 +17,7 @@ class Neo4jOutput():
         self.test = False
         logger.info("DEBUG: {0}:{1}".format(neo4j_host, neo4j_port))
         try:
-            self.db = GraphDatabase("{0}:{1}".format(neo4j_host, neo4j_port), neo4j_user, neo4j_pass)
+            self.db = GraphDatabase("http://{0}:{1}".format(neo4j_host, neo4j_port), neo4j_user, neo4j_pass)
             self.test = True
         except Exception as e:
             logger.error(e)
