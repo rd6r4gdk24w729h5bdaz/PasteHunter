@@ -60,6 +60,15 @@
       "elastic_ssl": false,
       "weekly_index": true
     },
+    "neo4j_output": {
+      "enabled": true,
+      "module": "outputs.neo4j_output",
+      "classname": "Neo4jOutput",
+      "neo4j_host": "172.16.10.10",
+      "neo4j_port": 7474,
+      "neo4juser": "neo4j",
+      "neo4j_pass": "changeme"
+    },
     "json_output": {
       "enabled": false,
       "module": "outputs.json_output",

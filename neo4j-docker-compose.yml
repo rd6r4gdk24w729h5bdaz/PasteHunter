@@ -1,0 +1,41 @@
+version: "2"
+services:
+  pastehunter:
+    build: .
+    container_name: pastehunter-core
+    volumes:
+      - /opt/PasteHunter:/usr/src/pastehunter/
+      - /opt/PasteHunter/logs:/usr/src/pastehunter/logs
+    networks:
+      net-pastehunter:
+        ipv4_address: 172.16.10.11
+    depends_on:
+      - "neo4j"
+
+  neo4j:
+    image: neo4j:3.5-enterprise
+    container_name: pastehunter-neo4j
+    environment:
+      - NEO4J_ACCEPT_LICENSE_AGREEMENT=yes
+      - NEO4J_AUTH=neo4j/changeme
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    mem_limit: 1g
+    volumes:
+      - /opt/PasteHunter/neo4j:/data
+    ports:
+      - "0.0.0.0:7474:7474"
+      - "0.0.0.0:7473:7473"
+      - "0.0.0.0:7687:7687"
+    networks:
+      net-pastehunter:
+        ipv4_address: 172.16.10.10
+
+networks:
+  net-pastehunter:
+    driver: bridge
+    ipam:
+      config:
+      - subnet: 172.16.10.0/24
