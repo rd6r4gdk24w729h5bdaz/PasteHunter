@@ -49,13 +49,12 @@ class Neo4jOutput():
                 value = json.dumps(value)
             value = value.replace("\\", "\\\\")
             value = value.replace("'", "\\'")
-            #value = value.replace('"', '\\"')
             neo4j_json += "{0}: '{1}', ".format(key, value)
         neo4j_json = neo4j_json[:-2]  # Remove trailing ", "
 
         # Format neo4j "json" to Neo4j Cypher "create and update"
         db_insert = "MERGE (:{0} {{ {1} }})".format(nodetype, neo4j_json)
-        logger.debug("Cypher: {0} ".format(db_insert))
+        #logger.debug("Cypher: {0} ".format(db_insert))
 
         # Insert in DB
         self.db.query(db_insert)
@@ -90,7 +89,14 @@ class Neo4jOutput():
                 self.merge(paste_data, "paste")
         except Exception as e:
             if self.debug_mode:
-                logger.debug("FAILLURE at {0} with error {1} ######################################################################################################################################".format(paste_data["pasteid"], e))
+                logger.error("FAILLURE at {0} with error {1}".format(paste_data["pasteid"], e))
+                logger.error("###############################################")
+                logger.error("###############################################")
+                logger.error("###############################################")
+                logger.error("###############################################")
+                logger.error("###############################################")
+                logger.error("###############################################")
+                logger.error("###############################################")
                 sys.exit(1)
             else:
                 raise e
