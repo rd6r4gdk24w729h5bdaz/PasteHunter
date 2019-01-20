@@ -1,4 +1,6 @@
 # ToDo
+* Change email regex to match only domains longuer than 3 and tld longuer than 2
+
 * Search for usernames and password in code, json....
   (user(name)*)((\s|["'=,:;|│]|<br>)+)(?P<password>.+?)((\s|["'=,:;|│]|<br>)+)
   ((pass(w(or)*d)*)|pwd)((\s|["'=,:;|│]|<br>)+)(?P<password>.+?)((\s|["'=,:;|│]|<br>)+)
