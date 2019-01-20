@@ -64,6 +64,7 @@
       "enabled": true,
       "module": "outputs.neo4j_output",
       "classname": "Neo4jOutput",
+      "debug_mode": true,
       "neo4j_host": "172.16.10.13",
       "neo4j_port": 7474,
       "neo4j_user": "neo4j",

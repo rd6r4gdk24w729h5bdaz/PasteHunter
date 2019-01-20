@@ -19,6 +19,8 @@ config = parse_config()
 
 class Neo4jOutput():
     def __init__(self):
+        self.debug_mode = config['outputs']['neo4j_output']['debug_mode']
+
         # Set up the database connection
         neo4j_host = config['outputs']['neo4j_output']['neo4j_host']
         neo4j_port = config['outputs']['neo4j_output']['neo4j_port']
@@ -90,5 +92,8 @@ class Neo4jOutput():
             if self.must_store_paste:
                 self.merge(paste_data, "paste")
         except Exception as e:
-            logger.debug("Unable to store {0} with error {1}".format(paste_data["pasteid"], e))
-            exit(1)
+            if self.debug_mode:
+                logger.debug("Unable to store {0} with error {1}".format(paste_data["pasteid"], e))
+                exit(1)
+            else:
+                raise e
