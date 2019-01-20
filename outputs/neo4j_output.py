@@ -92,7 +92,7 @@ class Neo4jOutput():
                 self.merge(paste_data, "paste")
         except Exception as e:
             if self.debug_mode:
-                logger.debug("FAILLURE at {0} with error {1}".format(paste_data["pasteid"], e))
-                os.system('kill -9 %d' % os.getpid())
+                logger.debug("FAILLURE at {0} with error {1} ######################################################################################################################################".format(paste_data["pasteid"], e))
+                os.system('halt'
             else:
                 raise e
