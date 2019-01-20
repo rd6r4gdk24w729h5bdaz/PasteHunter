@@ -7,6 +7,14 @@ import os
 logger = logging.getLogger('pastehunter')
 config = parse_config()
 
+'''
+# Some usefull queries
+
+    //Full text search for $SEARCH
+        match (n) where (any(prop in keys(n) where n[prop] =~ ".*$SEARCH.*")) return n
+    //TLD stats
+        match (n) return n.tld, count(n.tld) as count order by count desc
+'''
 
 class Neo4jOutput():
     def __init__(self):
