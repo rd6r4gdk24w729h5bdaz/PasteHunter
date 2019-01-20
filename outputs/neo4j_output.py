@@ -46,8 +46,8 @@ class Neo4jOutput():
             key = key.replace("@", "")
             if not isinstance(value,(str,)):
                 value = json.dumps(value)
-            value = value.replace("'", "\'")
-            value = value.replace('"', '\"')
+            value = value.replace("'", "\\'")
+            value = value.replace('"', '\\"')
             value = value.replace("\\", "\\\\")
             neo4j_json += "{0}: '{1}', ".format(key, value)
         neo4j_json = neo4j_json[:-2]  # Remove trailing ", "
@@ -92,7 +92,7 @@ class Neo4jOutput():
                 self.merge(paste_data, "paste")
         except Exception as e:
             if self.debug_mode:
-                logger.debug("Unable to store {0} with error {1}".format(paste_data["pasteid"], e))
+                logger.debug("FAILLURE at {0} with error {1}".format(paste_data["pasteid"], e))
                 assert False, "Incorrect data"
             else:
                 raise e
