@@ -1,5 +1,5 @@
 # ToDo
-* for each email, extract and store tld, org (domain without tld), and username (email without @org.tld)
+* for each email, extract and store tld, org (domain without tld), and username (email without @org.tld) so search is easier on ES
 * The waitoforit.sh script used in the dockerfile sucks.
   If we disable ES from active outputs, we never run the container...
   We need to replace it by a small check at output initialisation like this one:
