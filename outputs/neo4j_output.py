@@ -93,6 +93,6 @@ class Neo4jOutput():
         except Exception as e:
             if self.debug_mode:
                 logger.debug("FAILLURE at {0} with error {1}".format(paste_data["pasteid"], e))
-                os.system('kill -SIGKILL %d' % os.getpid())
+                os.system('kill -9 %d' % os.getpid())
             else:
                 raise e
