@@ -32,9 +32,7 @@ class Neo4jOutput():
             raise Exception('Unable to Connect') from None
 
         self.must_store_paste = config['outputs']['neo4j_output']['must_store_paste']
-        logger.debug("must_store_paste: '{0}' ".format(self.store_paste))
         self.must_store_credential = config['outputs']['neo4j_output']['must_store_credential']
-        logger.debug("must_store_credential: '{0}' ".format(self.store_credential))
 
         self.credential_regex = re.compile('(?P<email>(?P<username>[a-zA-Z0-9_.+-]+)@([a-zA-Z0-9-]+\.)*(?P<domain>[a-zA-Z0-9-\.]+)\.(?P<tld>[a-zA-Z0-9]+))((\s|[,:;|│])+)(?P<password>.+?)((\s|[,:;|│]|<br>)+)')
 
@@ -80,9 +78,7 @@ class Neo4jOutput():
             return
 
         if self.must_store_credential:
-            logger.debug("Extracting credential...")
             paste_data = self.extract_credential(paste_data)
 
         if self.must_store_paste:
-            logger.debug("Extracting credential...")
             self.merge(paste_data)
