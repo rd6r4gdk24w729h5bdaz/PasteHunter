@@ -1,4 +1,8 @@
 # ToDo
+* For Neo4j, insert pastes and link them to username_passwords.
+* ensure those formats are found by the username_password_regex or a second step regex.
+  * MyPassword123 test123@hotmail.com
+  * As Combo: test123@hotmail.com:MyPassword123
 * for each email, extract and store tld, org (domain without tld), and username (email without @org.tld) so search is easier on ES
 * The waitoforit.sh script used in the dockerfile sucks.
   If we disable ES from active outputs, we never run the container...
@@ -20,6 +24,7 @@
   >      time.sleep(connection_delay)
 
 * Handle these kind of credentials:
+  * ovpn
   * cisco passwords in a cisco_password index
     "enable secret" wide ascii nocase
     "enable password" wide ascii nocase
