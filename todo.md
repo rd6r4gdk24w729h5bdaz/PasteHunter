@@ -23,7 +23,7 @@
   >        exit(1)
   >      time.sleep(connection_delay)
 
-* Handle these kind of credentials:
+* Handle and store these kind of credentials:
   * ovpn
   * cisco passwords in a cisco_password index
     "enable secret" wide ascii nocase
