@@ -4,6 +4,7 @@ import logging
 import json
 import re
 import os
+import sys
 
 logger = logging.getLogger('pastehunter')
 config = parse_config()
