@@ -36,7 +36,7 @@ class Neo4jOutput():
 
         self.credential_regex = re.compile('(?P<email>(?P<username>[a-zA-Z0-9_.+-]+)@([a-zA-Z0-9-]+\.)*(?P<domain>[a-zA-Z0-9-\.]+)\.(?P<tld>[a-zA-Z0-9]+))((\s|[,:;|│])+)(?P<password>.+?)((\s|[,:;|│]|<br>)+)')
 
-    def merge(self, dict):
+    def merge(self, dict, nodetype):
         # Format dict to neo4j "json"
         neo4j_json = ''
         for key, value in dict.items():
@@ -44,7 +44,7 @@ class Neo4jOutput():
         neo4j_json = neo4j_json[:-2]  # Remove trailing ", "
 
         # Format neo4j "json" to Neo4j Cypher "create and update"
-        db_insert = "MERGE (:email_password_leak {{ {0} }})".format(neo4j_json)
+        db_insert = "MERGE (:{0} {{ {1} }})".format(nodetype, neo4j_json)
         logger.debug("Cypher: {0} ".format(db_insert))
 
         # Insert in DB
@@ -66,7 +66,7 @@ class Neo4jOutput():
                         'line': line,
                         }
                 logger.debug("Credential: {0} ".format(cred))
-                self.merge(cred)
+                self.merge(cred, "credential")
                 credential_count += 1
         logger.info("Paste {0} contains {1} credential leaks".format(paste_data["pasteid"], credential_count))
         paste_data['credential_count'] = credential_count
@@ -81,4 +81,4 @@ class Neo4jOutput():
             paste_data = self.extract_credential(paste_data)
 
         if self.must_store_paste:
-            self.merge(paste_data)
+            self.merge(paste_data, "paste")
