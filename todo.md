@@ -1,11 +1,17 @@
 # ToDo
+* Search for usernames and password in code, json....
+  (user(name)*)((\s|["'=,:;|│]|<br>)+)(?P<password>.+?)((\s|["'=,:;|│]|<br>)+)
+  ((pass(w(or)*d)*)|pwd)((\s|["'=,:;|│]|<br>)+)(?P<password>.+?)((\s|["'=,:;|│]|<br>)+)
+  (credential(s)?)((\s|["'=,:;|│]|<br>)+)(?P<password>.+?)((\s|["'=,:;|│]|<br>)+)
+* for each email, extract and store tld, org (domain without tld), and username (email without @org.tld) so search is easier on ES
+    * ES: ToDo
+    * Neo4j: DONE
+
 * For Neo4j, insert pastes and link them to username_passwords.
 * ensure those formats are found by the username_password_regex or a second step regex.
   * MyPassword123 test123@hotmail.com
   * As Combo: test123@hotmail.com:MyPassword123
-* for each email, extract and store tld, org (domain without tld), and username (email without @org.tld) so search is easier on ES
-  * ES: ToDo
-  * Neo4j: working...
+
 * The waitoforit.sh script used in the dockerfile sucks.
   If we disable ES from active outputs, we never run the container...
   We need to replace it by a small check at output initialisation like this one:
