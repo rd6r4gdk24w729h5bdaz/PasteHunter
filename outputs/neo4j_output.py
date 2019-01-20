@@ -38,7 +38,7 @@ class Neo4jOutput():
         self.must_store_paste = config['outputs']['neo4j_output']['must_store_paste']
         self.must_store_credential = config['outputs']['neo4j_output']['must_store_credential']
 
-        self.credential_regex = re.compile('(?P<email>(?P<username>[a-zA-Z0-9_.+-]+)@([a-zA-Z0-9-]+\.)*(?P<domain>[a-zA-Z0-9-\.]+)\.(?P<tld>[a-zA-Z0-9]+))((\s|[,:;|│])+)(?P<password>.+?)((\s|[,:;|│]|<br>)+)')
+        self.credential_regex = r"(?P<email>(?P<username>[a-zA-Z0-9_.+-]+)@([a-zA-Z0-9-]+\.)*(?P<domain>[a-zA-Z0-9-\.]+)\.(?P<tld>[a-zA-Z0-9]+))((\s|[,:;|│])+)(?P<password>.+?)((\s|[,:;|│]|<br>)+)"
 
     def merge(self, dict, nodetype):
         # Format dict to neo4j "json"
@@ -63,21 +63,18 @@ class Neo4jOutput():
     def extract_credential(self, paste_data):
         # Extract creds from paste
         credential_count = 0
-        for line in paste_data['raw_paste'].splitlines():
-            logger.debug("Line: '{0}' ".format(line))
-            res = self.credential_regex.match(line+os.linesep)
-            logger.debug("regex match: {0} ".format(res))
-            if res:
-                cred = {'email': res.group("email").lower(),
-                        'username': res.group("username").lower(),
-                        'domain': res.group("domain").lower(),
-                        'tld': res.group("tld").lower(),
-                        'password': res.group("password"),
-                        'line': line,
-                        }
-                logger.debug("Credential: {0} ".format(cred))
-                self.merge(cred, "credential")
-                credential_count += 1
+        matches = re.finditer(self.credential_regex, paste_data['raw_paste']+os.linesep, re.MULTILINE | re.IGNORECASE)
+        for matchNum, match in enumerate(matches, start=1):
+            cred = {'email': match.group("email").lower(),
+                    'username': match.group("username").lower(),
+                    'domain': match.group("domain").lower(),
+                    'tld': match.group("tld").lower(),
+                    'password': match.group("password"),
+                    'line': match.group()
+                    }
+            logger.debug("Credential: {0} ".format(cred))
+            self.merge(cred, "credential")
+            credential_count += 1
         logger.info("Paste {0} contains {1} credential leaks".format(paste_data["pasteid"], credential_count))
 
     def store_paste(self, paste_data):
