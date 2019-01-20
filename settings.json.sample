@@ -67,7 +67,7 @@
       "neo4j_host": "172.16.10.13",
       "neo4j_port": 7474,
       "neo4j_user": "neo4j",
-      "neo4j_pass": "changeme"
+      "neo4j_pass": "changeme",
     },
     "json_output": {
       "enabled": false,
