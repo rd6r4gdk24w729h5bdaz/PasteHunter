@@ -185,6 +185,9 @@ def paste_scanner():
                 try:
                     output.store_paste(paste_data)
                     logger.info("Paste {0} was stored to {1}".format(paste_data["pasteid"], output))
+                except SystemExit as e:
+                    logger.error("Unable to store {0} to {1} with error {2}".format(paste_data["pasteid"], output, e))
+                    sys.exit(1)
                 except Exception as e:
                     logger.error("Unable to store {0} to {1} with error {2}".format(paste_data["pasteid"], output, e))
         else:
