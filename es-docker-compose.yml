@@ -12,6 +12,7 @@ services:
     depends_on:
       - "elasticsearch"
       - "kibana"
+
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:6.1.0
     container_name: pastehunter-elasticsearch

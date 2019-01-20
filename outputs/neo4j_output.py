@@ -34,7 +34,7 @@ class Neo4jOutput():
         for line in paste_data['raw_paste'].splitlines():
             logger.debug("Line: '{0}' ".format(line))
             res = self.username_password_regex.match(line+os.linesep)
-            logger.debug("res: {0} ".format(res))
+            logger.debug("regex res: {0} ".format(res))
             if res:
                 cred = {'username': res.group("username").lower(),
                         'password': res.group("password")
@@ -46,7 +46,6 @@ class Neo4jOutput():
                 for key, value in cred.items():
                     neo4j_json += "{0}: '{1}', ".format(key, value)
                 neo4j_json = neo4j_json[:-2]  # Remove trailing ", "
-                logger.debug("neo4j_json: {0} ".format(neo4j_json))
 
                 # Insert in DB
                 db_insert = "MERGE (:username_password {{ {0} }})".format(neo4j_json)
