@@ -32,11 +32,11 @@ class Neo4jOutput():
         # Extract creds from paste
         cred_counter = 0
         for line in paste_data['raw_paste'].splitlines():
-            logger.debug("Line: {0} ".format(line))
+            logger.debug("Line: '{0}' ".format(line))
             res = self.username_password_regex.match(line+os.linesep)
             logger.debug("res: {0} ".format(res))
             if res:
-                cred = {'username': res.group("username"),
+                cred = {'username': res.group("username").lower(),
                         'password': res.group("password")
                         }
                 logger.debug("Cred: {0} ".format(cred))

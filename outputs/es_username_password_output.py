@@ -43,7 +43,7 @@ class ESUsernamePasswordOutput():
         for line in paste_data['raw_paste'].splitlines():
             res = self.username_password_regex.match(line+os.linesep)
             if res:
-                cred = {'username':    res.group("username"),
+                cred = {'username':    res.group("username").lower(),
                         'password': res.group("password")
                         }
                 res = self.es.index(index=index_name, doc_type='username_password', body=cred)
