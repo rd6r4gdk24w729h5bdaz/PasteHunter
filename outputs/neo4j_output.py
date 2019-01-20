@@ -48,6 +48,7 @@ class Neo4jOutput():
                 value = json.dumps(value)
             value = value.replace("'", "\'")
             value = value.replace('"', '\"')
+            value = value.replace('\', '\\')
             neo4j_json += "{0}: '{1}', ".format(key, value)
         neo4j_json = neo4j_json[:-2]  # Remove trailing ", "
 
@@ -77,8 +78,6 @@ class Neo4jOutput():
                 self.merge(cred, "credential")
                 credential_count += 1
         logger.info("Paste {0} contains {1} credential leaks".format(paste_data["pasteid"], credential_count))
-        paste_data['credential_count'] = credential_count
-        return paste_data
 
     def store_paste(self, paste_data):
         try:
@@ -87,7 +86,7 @@ class Neo4jOutput():
                 return
 
             if self.must_store_credential:
-                paste_data = self.extract_credential(paste_data)
+                self.extract_credential(paste_data)
 
             if self.must_store_paste:
                 self.merge(paste_data, "paste")
