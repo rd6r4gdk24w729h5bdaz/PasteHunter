@@ -15,7 +15,7 @@ class Neo4jOutput():
         neo4j_port = config['outputs']['neo4j_output']['neo4j_port']
         neo4j_user = config['outputs']['neo4j_output']['neo4j_user']
         neo4j_pass = config['outputs']['neo4j_output']['neo4j_pass']
-        self.leak_regex = re.compile('(?P<email>(?P<username>[a-zA-Z0-9_.+-]+)@([a-zA-Z0-9-]+\.)*(?P<domain>[a-zA-Z0-9-\.]+)\.(?P<tld>[a-zA-Z0-9]+))((\s|[:;|│])+)(?P<password>[a-zA-Z0-9]+?)((\s|[:;|│])+)')
+        self.leak_regex = re.compile('(?P<email>(?P<username>[a-zA-Z0-9_.+-]+)@([a-zA-Z0-9-]+\.)*(?P<domain>[a-zA-Z0-9-\.]+)\.(?P<tld>[a-zA-Z0-9]+))((\s|[:;|│])+)(?P<password>.+?)((\s|[:;|│])+)')
         self.test = False
         try:
             self.db = GraphDatabase("http://{0}:{1}".format(neo4j_host, neo4j_port), neo4j_user, neo4j_pass)
