@@ -1,6 +1,8 @@
 # ToDo
+* add input file so we can always do all the tests using same pastes and have more consistant results
 * Change email regex to match only domains longuer than 3 and tld longuer than 2
 * inspect each leak to see what is the most used separator in ":;|". Change regex according so we don't truncate passwords using the other separators
+
 
 * Search for usernames and password in code, json....
   (user(name)*)((\s|["'=,:;|│]|<br>)+)(?P<password>.+?)((\s|["'=,:;|│]|<br>)+)
