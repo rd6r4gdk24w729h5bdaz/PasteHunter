@@ -23,7 +23,6 @@ class Neo4jOutput():
         neo4j_port = config['outputs']['neo4j_output']['neo4j_port']
         neo4j_user = config['outputs']['neo4j_output']['neo4j_user']
         neo4j_pass = config['outputs']['neo4j_output']['neo4j_pass']
-        self.leak_regex = re.compile('(?P<email>(?P<username>[a-zA-Z0-9_.+-]+)@([a-zA-Z0-9-]+\.)*(?P<domain>[a-zA-Z0-9-\.]+)\.(?P<tld>[a-zA-Z0-9]+))((\s|[,:;|│])+)(?P<password>.+?)((\s|[,:;|│]|<br>)+)')
         self.test = False
         try:
             self.db = GraphDatabase("http://{0}:{1}".format(neo4j_host, neo4j_port), neo4j_user, neo4j_pass)
@@ -31,6 +30,11 @@ class Neo4jOutput():
         except Exception as e:
             logger.error(e)
             raise Exception('Unable to Connect') from None
+
+        self.store_paste = config['outputs']['neo4j_output']['extract_paste']
+        self.store_credential = config['outputs']['neo4j_output']['extract_credential']
+
+        self.credential_regex = re.compile('(?P<email>(?P<username>[a-zA-Z0-9_.+-]+)@([a-zA-Z0-9-]+\.)*(?P<domain>[a-zA-Z0-9-\.]+)\.(?P<tld>[a-zA-Z0-9]+))((\s|[,:;|│])+)(?P<password>.+?)((\s|[,:;|│]|<br>)+)')
 
     def merge(self, dict):
         # Format dict to neo4j "json"
@@ -46,16 +50,12 @@ class Neo4jOutput():
         # Insert in DB
         self.db.query(db_insert)
 
-    def store_paste(self, paste_data):
-        if not self.test:
-            logger.error("Neo4j Enabled, not configured!")
-            return
-
+    def extract_credential(self, paste_data):
         # Extract creds from paste
         cred_counter = 0
         for line in paste_data['raw_paste'].splitlines():
             logger.debug("Line: '{0}' ".format(line))
-            res = self.leak_regex.match(line+os.linesep)
+            res = self.credential_regex.match(line+os.linesep)
             logger.debug("regex match: {0} ".format(res))
             if res:
                 cred = {'email': res.group("email").lower(),
@@ -63,9 +63,20 @@ class Neo4jOutput():
                         'domain': res.group("domain").lower(),
                         'tld': res.group("tld").lower(),
                         'password': res.group("password"),
-                        'line': line
+                        'line': line,
                         }
-                logger.debug("Leak: {0} ".format(cred))
+                logger.debug("Credential: {0} ".format(cred))
                 self.merge(cred)
                 cred_counter += 1
         logger.info("Paste {0} contains {1} email password leak".format(paste_data["pasteid"], cred_counter))
+
+    def store_paste(self, paste_data):
+        if not self.test:
+            logger.error("Neo4j Enabled, not configured!")
+            return
+
+        if self.store_paste:
+            self.merge(paste_data)
+
+        if self.store_credential:
+            self.extract_credential(paste_data)

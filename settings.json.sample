@@ -68,6 +68,8 @@
       "neo4j_port": 7474,
       "neo4j_user": "neo4j",
       "neo4j_pass": "changeme",
+      "store_paste": true,
+      "store_credential": true,
     },
     "json_output": {
       "enabled": false,
