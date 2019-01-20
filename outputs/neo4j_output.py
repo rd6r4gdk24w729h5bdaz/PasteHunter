@@ -79,12 +79,16 @@ class Neo4jOutput():
         return paste_data
 
     def store_paste(self, paste_data):
-        if not self.test:
-            logger.error("Neo4j Enabled, not configured!")
-            return
+        try:
+            if not self.test:
+                logger.error("Neo4j Enabled, not configured!")
+                return
 
-        if self.must_store_credential:
-            paste_data = self.extract_credential(paste_data)
+            if self.must_store_credential:
+                paste_data = self.extract_credential(paste_data)
 
-        if self.must_store_paste:
-            self.merge(paste_data, "paste")
+            if self.must_store_paste:
+                self.merge(paste_data, "paste")
+        except Exception as e:
+            logger.debug("Unable to store {0} with error {1}".format(paste_data["pasteid"], e))
+            exit(1)
