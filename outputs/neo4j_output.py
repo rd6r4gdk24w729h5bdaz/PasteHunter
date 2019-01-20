@@ -40,6 +40,7 @@ class Neo4jOutput():
         # Format dict to neo4j "json"
         neo4j_json = ''
         for key, value in dict.items():
+            key = key.replace("@", "")
             neo4j_json += "{0}: '{1}', ".format(key, value)
         neo4j_json = neo4j_json[:-2]  # Remove trailing ", "
 
