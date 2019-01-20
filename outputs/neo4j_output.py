@@ -52,7 +52,7 @@ class Neo4jOutput():
 
     def extract_credential(self, paste_data):
         # Extract creds from paste
-        cred_counter = 0
+        credential_count = 0
         for line in paste_data['raw_paste'].splitlines():
             logger.debug("Line: '{0}' ".format(line))
             res = self.credential_regex.match(line+os.linesep)
@@ -67,16 +67,18 @@ class Neo4jOutput():
                         }
                 logger.debug("Credential: {0} ".format(cred))
                 self.merge(cred)
-                cred_counter += 1
-        logger.info("Paste {0} contains {1} email password leak".format(paste_data["pasteid"], cred_counter))
+                credential_count += 1
+        logger.info("Paste {0} contains {1} credential leaks".format(paste_data["pasteid"], credential_count))
+        paste_data['credential_count'] = credential_count
+        return paste_data
 
     def store_paste(self, paste_data):
         if not self.test:
             logger.error("Neo4j Enabled, not configured!")
             return
 
+        if self.store_credential:
+            paste_data = self.extract_credential(paste_data)
+
         if self.store_paste:
             self.merge(paste_data)
-
-        if self.store_credential:
-            self.extract_credential(paste_data)
