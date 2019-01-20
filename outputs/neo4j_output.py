@@ -15,7 +15,7 @@ config = parse_config()
     //Full text search for $SEARCH
         match (n) where (any(prop in keys(n) where n[prop] =~ ".*$SEARCH.*")) return n
     //TLD stats
-        match (n) return n.tld, count(n.tld) as count order by count desc
+        match (n:credential) return n.tld, count(n.tld) as count order by count desc
 '''
 
 class Neo4jOutput():
