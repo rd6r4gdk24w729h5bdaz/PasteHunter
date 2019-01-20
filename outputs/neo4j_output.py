@@ -41,6 +41,8 @@ class Neo4jOutput():
         neo4j_json = ''
         for key, value in dict.items():
             key = key.replace("@", "")
+            value = value.replace("'", "\'")
+            value = value.replace('"', '\"')
             neo4j_json += "{0}: '{1}', ".format(key, value)
         neo4j_json = neo4j_json[:-2]  # Remove trailing ", "
 
