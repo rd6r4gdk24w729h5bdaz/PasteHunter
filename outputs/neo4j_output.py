@@ -93,6 +93,6 @@ class Neo4jOutput():
         except Exception as e:
             if self.debug_mode:
                 logger.debug("Unable to store {0} with error {1}".format(paste_data["pasteid"], e))
-                exit(1)
+                assert False, "Incorrect data"
             else:
                 raise e
