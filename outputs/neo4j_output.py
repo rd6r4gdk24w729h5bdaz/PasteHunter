@@ -48,7 +48,7 @@ class Neo4jOutput():
                 value = json.dumps(value)
             value = value.replace("'", "\\'")
             value = value.replace('"', '\\"')
-            value = value.replace("\\", "\")
+            value = value.replace("\\", "\\\")
             neo4j_json += "{0}: '{1}', ".format(key, value)
         neo4j_json = neo4j_json[:-2]  # Remove trailing ", "
 
