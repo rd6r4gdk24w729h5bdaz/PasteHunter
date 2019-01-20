@@ -1,6 +1,7 @@
 from neo4jrestclient.client import GraphDatabase
 from common import parse_config
 import logging
+import json
 import re
 import os
 
@@ -41,6 +42,8 @@ class Neo4jOutput():
         neo4j_json = ''
         for key, value in dict.items():
             key = key.replace("@", "")
+            if not isinstance(value,(str,)):
+                value = json.dump(value)
             value = value.replace("'", "\'")
             value = value.replace('"', '\"')
             neo4j_json += "{0}: '{1}', ".format(key, value)
