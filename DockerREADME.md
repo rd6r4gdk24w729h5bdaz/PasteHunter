@@ -6,5 +6,5 @@
 * chmod -R 777 data
 * mv settings.json.sample settings.json
 * docker build . -t pastehunter-core
-* mv es-docker-compose.yml docker-compose.yml
+* mv neo4j-docker-compose.yml docker-compose.yml
 * docker-compose up -d
