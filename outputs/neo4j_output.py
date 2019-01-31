@@ -38,7 +38,7 @@ class Neo4jOutput():
         self.must_store_paste = config['outputs']['neo4j_output']['must_store_paste']
         self.must_store_credential = config['outputs']['neo4j_output']['must_store_credential']
 
-        self.credential_regex = r"(?P<email>(?P<username>[a-zA-Z0-9_.+-]+)@([a-zA-Z0-9-]+\.)*(?P<domain>[a-zA-Z0-9-\.]+)\.(?P<tld>[a-zA-Z]+))((\s|[:;|│])+)(?P<password>.+?)((\s|[,:;|│]|<br>)+)"
+        self.credential_regex = r"(?P<email>(?P<username>[a-zA-Z0-9_.+-]+)@([a-zA-Z0-9-]+\.)*(?P<domain>[a-zA-Z0-9-\.]+)\.(?P<tld>[a-zA-Z]+))((\s|[:;|│])+)(?P<password>(?!password:|(([a-zA-Z0-9_.+-]+)@([a-zA-Z0-9-\.]{3,})\.([a-zA-Z]{2,5}))).+?)((\s|[,:;|│]|<br>)+)"
 
     def merge(self, dict, nodetype):
         # Format dict to neo4j "json"
